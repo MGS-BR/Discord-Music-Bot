@@ -8,6 +8,9 @@ You can use these files to make a music bot for your Discord server
 ## Requirements:
 * [Python](https://www.python.org/): code programming language;
 * [Discord.py](https://discordpy.readthedocs.io/en/latest/): discord.py library;
+* [FFmpeg](https://ffmpeg.org/download.html): FFmpeg download
+
+You need to put FFmpeg in your system path
 
 To install the necessary dependencies you need to open your cmd and type:
 ```py
