@@ -30,7 +30,7 @@ class Music(commands.Cog):
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def join(self, ctx):
         if ctx.author.voice is None:
-            await ctx.send("You're not in a voice channel", delete_after=30)
+            await ctx.send("You're not in a voice channel", delete_after=10)
             return
         voice_channel = ctx.author.voice.channel
         if ctx.voice_client is None:
@@ -54,7 +54,7 @@ class Music(commands.Cog):
 
         try:
             if ctx.author.voice is None:
-                await ctx.send("You're not in a voice channel", delete_after=30)
+                await ctx.send("You're not in a voice channel", delete_after=10)
                 return
             voice_channel = ctx.author.voice.channel
             if ctx.voice_client is None:
@@ -65,7 +65,7 @@ class Music(commands.Cog):
             pass
 
         if url == None:
-            await ctx.send('You forgot to say the song you want to play', delete_after=30)
+            await ctx.send('You forgot to say the song you want to play', delete_after=10)
             return
 
         ctx.voice_client.stop()
@@ -102,29 +102,42 @@ class Music(commands.Cog):
     @commands.command(aliases=['pausar'], description='Pause current song', usage=f'{prefixo}pause')
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def pause(self, ctx):
-        try:
-            await ctx.voice_client.pause()
-        except:
-            pass
-        await ctx.message.add_reaction('⏸️')
+        sp = ctx.voice_client.is_playing()
+        p = ctx.voice_client.is_paused()
+        if sp == True:
+            if p == False:
+                ctx.voice_client.pause()
+                await ctx.message.add_reaction('⏸️')
+            else:
+                if p == True:
+                    await ctx.send('The music is already paused', delete_after=10)
+        else:
+            if p == True:
+                await ctx.send('The music is already paused', delete_after=10)
+            else:
+                await ctx.send("I'm not playing any music at the moment", delete_after=10)
+
 
     @commands.command(aliases=['despausar'], description='Unpause the music', usage=f'{prefixo}resume')
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def resume(self, ctx):
-        try:
-            await ctx.voice_client.resume()
-        except:
-            pass
-        await ctx.message.add_reaction('▶️')
+        P = ctx.voice_client.is_paused()
+        if P == True:
+            ctx.voice_client.resume()
+            await ctx.message.add_reaction('▶️')
+        else:
+            await ctx.send('The music is not paused', delete_after=10)
 
     @commands.command(aliases=['parar'], description='Stop current song', usage=f'{prefixo}stop')
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def stop(self, ctx):
-        try:
-            await ctx.voice_client.stop()
-        except:
-            pass
-        await ctx.message.add_reaction('⏹️')
+        SP = ctx.voice_client.is_playing()
+        if SP == True:
+            ctx.voice_client.stop()
+            await ctx.message.add_reaction('⏹️')
+        else:
+            await ctx.send("I'm not playing any music at the moment", delete_after=10)
+
 
 def setup(client):
     client.add_cog(Music(client))
