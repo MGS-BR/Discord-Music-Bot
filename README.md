@@ -5,6 +5,8 @@ The code was written using [python](https://www.python.org/) 3.5+, it is not gua
 
 You can use these files to make a music bot for your Discord server
 
+![main](https://i.imgur.com/M3aa40t.jpg)
+
 # How to configure:
 
 ## Requirements:
@@ -25,5 +27,9 @@ To bring the bot online, open 'config.json' file and in the code location where 
 "token":"TOKEN HERE"
 ```
 you replace the TOKEN HERE with your bot's token.
+
+# Commands:
+
+You can type `help` to see bot commands, default command to play music `play <url>`
 
 Now if you did everything correctly just run main.py and have fun with the bot!
