@@ -35,8 +35,11 @@ class Music(commands.Cog):
         voice_channel = ctx.author.voice.channel
         if ctx.voice_client is None:
             await voice_channel.connect()
+            print(f'Joined {voice_channel.name}')
         else:
             await ctx.voice_client.move_to(voice_channel)
+            print(f'Moved to {voice_channel.name}')
+        
         await ctx.message.add_reaction('👍')
 
     @commands.command(aliases=['sair'], description='Leave the voice channel', usage=f'{prefixo}leave')
@@ -101,28 +104,27 @@ class Music(commands.Cog):
     async def pause(self, ctx):
         try:
             await ctx.voice_client.pause()
+            await ctx.message.add_reaction('⏸️')
         except:
             pass
-        await ctx.message.add_reaction('⏸️')
 
     @commands.command(aliases=['despausar'], description='Unpause the music', usage=f'{prefixo}resume')
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def resume(self, ctx):
         try:
             await ctx.voice_client.resume()
+            await ctx.message.add_reaction('▶️')
         except:
             pass
-        await ctx.message.add_reaction('▶️')
 
     @commands.command(aliases=['parar'], description='Stop current song', usage=f'{prefixo}stop')
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def stop(self, ctx):
         try:
             await ctx.voice_client.stop()
+            await ctx.message.add_reaction('⏹️')
         except:
             pass
-        await ctx.message.add_reaction('⏹️')
-
 
 def setup(client):
     client.add_cog(Music(client))
