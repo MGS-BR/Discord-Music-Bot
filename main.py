@@ -5,12 +5,6 @@ import asyncio
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 
-# pip install discord[voice]
-# pip install youtube_dl
-# you will need an ffmpeg
-
-# you need to put your bot's token in the 'config.json' file, if you can't open it normally, try opening it with notepad
-
 with open('config.json') as e:
     infos = json.load(e)
     TOKEN = infos['token']
@@ -28,6 +22,11 @@ async def on_ready():
 async def on_message(message):
     if message.content == f'<@!{client.user.id}>' or message.content == f'<@{client.user.id}>':
         await message.channel.send(f'**{message.author.mention} My prefix is: `{prefixo}`**')
+
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        await ctx.reply('Cooldown command, try again in **{:.2f}** seconds'.format(error.retry_after), delete_after=5)
 
 class MyHelp(commands.MinimalHelpCommand):
 
