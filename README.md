@@ -18,8 +18,7 @@ You need to put FFmpeg in your system path
 
 To install the necessary dependencies you need to open your cmd and type:
 ```py
-pip install discord.py[voice]
-pip install youtube_dl
+pip install -r requirements.txt
 ```
 
 To bring the bot online, open 'config.json' file and in the code location where it says:
